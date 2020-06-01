@@ -1,18 +1,19 @@
-var constants = require("../constants");
-var jwt = require("jsonwebtoken");
-
-var authMiddleware = function (req, res, next) {
-  if (constants.NOT_AUTHORIZED_URL.includes(req.path)) {
+let constants = require("../constants");
+let jwt = require("jsonwebtoken");
+const { NOT_AUTHORIZED_URL, HTTP_STATUS_CODE } = require("../constants");
+const { getBearerToken } = require("../utils");
+console.log("getBearerToken", getBearerToken);
+let authMiddleware = function (req, res, next) {
+  if (NOT_AUTHORIZED_URL.includes(req.path)) {
     next();
     return;
   }
   const authorizationHeader =
     req.headers && req.headers.authorization ? req.headers.authorization : null;
-  const tokenArr = authorizationHeader ? authorizationHeader.split(" ") : null;
-  const token = tokenArr && tokenArr[1] ? tokenArr[1] : null;
+  const token = getBearerToken(authorizationHeader);
   if (!token) {
     res.json({
-      code: constants.HTTP_STATUS_CODE.UNAUTHORIZED,
+      code: HTTP_STATUS_CODE.UNAUTHORIZED,
       message: "Unauthorized",
     });
     return;
@@ -25,7 +26,7 @@ var authMiddleware = function (req, res, next) {
     // TokenExpiredError;
     console.log("verify token err", err.name, err.message);
     res.json({
-      code: constants.HTTP_STATUS_CODE.UNAUTHORIZED,
+      code: HTTP_STATUS_CODE.UNAUTHORIZED,
       message: "Unauthorized",
     });
   }
