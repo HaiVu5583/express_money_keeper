@@ -1,6 +1,6 @@
-let express = require("express");
-let router = express.Router();
-let jwt = require("jsonwebtoken");
+const express = require("express");
+const router = express.Router();
+const jwt = require("jsonwebtoken");
 /* GET users listing. */
 router.post("/generate_token", function (req, res, next) {
   console.log("Expire time", process.env.EXPIRE_TIME);
