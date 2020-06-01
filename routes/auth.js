@@ -3,7 +3,6 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 /* GET users listing. */
 router.post("/generate_token", function (req, res, next) {
-  console.log("Expire time", process.env.EXPIRE_TIME);
   const jwtToken = jwt.sign(
     {
       userid: 1,

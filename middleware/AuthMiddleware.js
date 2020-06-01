@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const { NOT_AUTHORIZED_URL, HTTP_STATUS_CODE } = require("../constants");
 const { getBearerToken } = require("../utils");
 const { ErrorResponseManager } = require("../network/ErrorResponse");
-console.log("getBearerToken", getBearerToken);
 
 const authMiddleware = function (req, res, next) {
   if (NOT_AUTHORIZED_URL.includes(req.path)) {
